@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SiCodereview } from "react-icons/si";
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
+import { useCookies } from "react-cookie";
+import moment from "moment/moment";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const Card = ({}) => {
+  const [cookie, setCookie] = useCookies();
+  const [datas, setDatas] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
+    axios
+      .get(`https://cms-admin.ihsansolusi.co.id/testapi/user`, {
+        headers: {
+          Authorization: `Bearer ${cookie.token}`,
+        },
+      })
+      .then((res) => {
+        setDatas(res.data.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        Swal.fire({
+          // text: err.,
+          showCancelButton: false,
+        });
+      });
+  };
   return (
     <>
       <div className="flex justify-start min-h-screen ">
@@ -20,57 +49,64 @@ const Card = ({}) => {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-gray-950">
-                <td className="p-3">
-                  <div className="flex align-items-center">
-                    <img
-                      className="rounded-full h-12 w-12  object-cover"
-                      src={
-                        "https://images.unsplash.com/photo-1613588718956-c2e80305bf61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80"
-                      }
-                      alt="unsplash image"
-                    />
-                    <div className="ml-3">
-                      <div className="">Appple</div>
-                      <div className="text-gray-500">mail@rgmail.com</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="p-3">Technology</td>
-                <td className="p-3 font-bold">200.00$</td>
-                <td className="p-3 font-bold">200.00$</td>
-                <td className="p-3">
-                  <span className="bg-green-400 text-gray-50 rounded-md px-2">
-                    available
-                  </span>
-                </td>
-                <td className="p-3 flex flex-row">
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-gray-100 mr-2"
-                  >
-                    <i className="material-icons-outlined text-base">
-                      <SiCodereview />
-                    </i>
-                  </a>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-gray-100  mx-2"
-                  >
-                    <i className="material-icons-outlined text-base">
-                      <FaRegEdit />
-                    </i>
-                  </a>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-gray-100  ml-2"
-                  >
-                    <i className="material-icons-round text-base">
-                      <MdDelete />
-                    </i>
-                  </a>
-                </td>
-              </tr>
+              {datas &&
+                datas.map((item) => (
+                  <tr className="bg-gray-950" key={item.id}>
+                    <td className="p-3">
+                      <div className="flex align-items-center">
+                        <img
+                          className="rounded-full h-12 w-12  object-cover"
+                          src={
+                            "https://images.unsplash.com/photo-1613588718956-c2e80305bf61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80"
+                          }
+                          alt="unsplash image"
+                        />
+                        <div className="ml-3">
+                          <div className="">{item.name}</div>
+                          <div className="text-gray-500">
+                            Input by :{item.user_name}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-3">{item.address}</td>
+                    <td className="p-3 font-bold">{item.gender}</td>
+                    <td className="p-3 font-bold">
+                      {moment(item.born_date).format("DD MMMM YYYY")}
+                    </td>
+                    <td className="p-3">
+                      <span className="bg-green-400 text-gray-50 rounded-md px-2">
+                        {moment(item.created_at).format("DD MMMM YYYY h:mm")}
+                      </span>
+                    </td>
+                    <td className="p-5 flex flex-row">
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-gray-100 mr-2"
+                      >
+                        <i className="material-icons-outlined text-base">
+                          <SiCodereview />
+                        </i>
+                      </a>
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-gray-100  mx-2"
+                      >
+                        <i className="material-icons-outlined text-base">
+                          <FaRegEdit />
+                        </i>
+                      </a>
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-gray-100  ml-2"
+                      >
+                        <i className="material-icons-round text-base">
+                          <MdDelete />
+                        </i>
+                      </a>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
