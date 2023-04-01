@@ -8,12 +8,12 @@ import axios from "axios";
 import { Btn, Btns } from "../components/Button";
 import { Input } from "../components/Input";
 
-export const Login = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true);
   const navigate = useNavigate();
-  const [, setCookie] = useCookies(["token"]);
+  const [cookie, setCookie] = useCookies();
 
   useEffect(() => {
     if (email && password) {
@@ -26,14 +26,14 @@ export const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = {
-      email,
-      password,
+      email: email,
+      password: password,
     };
 
     axios
       .post("https://cms-admin.ihsansolusi.co.id/testapi/auth/login", body)
       .then((res) => {
-        setCookie("token", res.data.token, { path: "/" });
+        setCookie("token", res.data.token);
         Swal.fire({
           title: "Success",
           text: res.data.message,
@@ -48,7 +48,6 @@ export const Login = () => {
       .catch((err) => {
         Swal.fire({
           title: "Failed",
-          text: err.response.data.message,
           showCancelButton: false,
         });
       });
@@ -68,7 +67,7 @@ export const Login = () => {
         <h1 id="login-page" className="text-3xl text-center mb-10">
           Login
         </h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="application/json">
           <Input
             id="input-email"
             title="Email"

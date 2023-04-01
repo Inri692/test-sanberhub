@@ -24,18 +24,18 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = {
-      name,
-      email,
-      password,
+      name: name,
+      email: email,
+      password: password,
     };
 
     axios
       .post("https://cms-admin.ihsansolusi.co.id/testapi/auth/register", body)
       .then((res) => {
-        console.log(res);
+        console.log(res.data.token);
         Swal.fire({
           title: "Success",
-          text: res.data.message,
+          text: res.data.detail,
           showCancelButton: false,
           confirmButtonText: "Ok",
         }).then((result) => {
@@ -65,7 +65,7 @@ const Register = () => {
         <h1 id="register-page" className="text-3xl text-center mb-10">
           Register
         </h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="application/json">
           <Input
             id="input-name"
             title="Name"
