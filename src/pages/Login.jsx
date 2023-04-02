@@ -63,7 +63,7 @@ const Login = () => {
       >
         <span className="hero-overlay bg-opacity-60" />
       </div>
-      <div className="md:mx-auto bg-white w-full max-h-[550px] max-w-md rounded-3xl p-5 my-10 shadow-lg m-5">
+      <div className="m-5 lg:mx-auto bg-[#e2e8f0] w-full max-w-md rounded-3xl p-5 my-5 shadow-lg">
         <h1 id="login-page" className="text-3xl text-center mb-10">
           Login
         </h1>
@@ -78,7 +78,7 @@ const Login = () => {
           <Input
             id="input-password"
             title="Password"
-            placeholder="Password"
+            placeholder="password"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />

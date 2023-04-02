@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
@@ -29,10 +30,10 @@ const Navbar = ({}) => {
   };
 
   return (
-    <div className="flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-white">
+    <div className="flex flex-col flex-auto hidden md:table-cell flex-shrink-0 antialiased bg-white bg-gray-50 text-white">
       <div className="fixed flex flex-col top-0 left-0 w-64 bg-[#312e81] h-full border-r">
         <div className="flex items-center justify-center h-14 border-b">
-          <div>Welcome</div>
+          <div className="text-2xl font-bold">Super Admin</div>
         </div>
         <div className="overflow-y-auto overflow-x-hidden py-4 space-y-1 px-5">
           <div className="w-[150px] h-[150px] mx-auto mt-3 rounded-full bg-white border-none">
@@ -42,9 +43,9 @@ const Navbar = ({}) => {
             />
           </div>
           <div className="pt-5">
-            <h1>Hello, {user.name}</h1>
-            <p>{user.email}</p>
-            <p>{user.status}</p>
+            <h1 className="text-xl font-bold">Hello, {user.name}</h1>
+            <p className="text-md font-normal">{user.email}</p>
+            <p className="text-md font-normal">{user.status}</p>
           </div>
         </div>
         <div className="overflow-y-auto overflow-x-hidden flex-grow pt-3">
@@ -77,7 +78,7 @@ const Navbar = ({}) => {
                     ></path>
                   </svg>
                 </span>
-                <span className="ml-2 text-xl text-white hover:text-gray-800">
+                <span className="ml-2 text-xl font-bold text-white hover:text-gray-800">
                   Dashboard
                 </span>
               </a>
@@ -103,8 +104,9 @@ const Navbar = ({}) => {
                     ></path>
                   </svg>
                 </span>
-                <span className="ml-2 text-xl text-white hover:text-gray-800">
-                  Logout
+
+                <span className="ml-2 text-xl font-bold text-white hover:text-gray-800">
+                  <Link to="/">Logout</Link>
                 </span>
               </a>
             </li>

@@ -32,7 +32,6 @@ const Register = () => {
     axios
       .post("https://cms-admin.ihsansolusi.co.id/testapi/auth/register", body)
       .then((res) => {
-        console.log(res.data.token);
         Swal.fire({
           title: "Success",
           text: res.data.detail,
@@ -54,9 +53,9 @@ const Register = () => {
   };
 
   return (
-    <div className="flex w-full h-screen bg-white">
+    <div className="flex min-h-screen items-center">
       <div
-        className="w-1/2 h-full bg-no-repeat bg-cover opacity-95 hidden lg:block"
+        className="hero w-1/2 h-screen hidden lg:block"
         style={{
           backgroundImage: `url(https://img.freepik.com/free-vector/man-look-graphic-chart-business-analytics-concept-big-data-processing-icon_39422-761.jpg)`,
         }}
@@ -69,7 +68,7 @@ const Register = () => {
           <Input
             id="input-name"
             title="Name"
-            placeholder="Name"
+            placeholder="masukkan nama minimal 8 karakter"
             type="text"
             onChange={(e) => setName(e.target.value)}
           />
@@ -84,7 +83,7 @@ const Register = () => {
           <Input
             id="input-password"
             title="Password"
-            placeholder="Password"
+            placeholder="masukkan password minimal 8 karakter"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />

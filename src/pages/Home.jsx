@@ -14,13 +14,14 @@ const Home = () => {
   const [address, setAddres] = useState("");
   const [born_date, setBorn] = useState("");
   const [cookie, setCookie] = useCookies();
+  const [loading, setLoading] = useState(true);
   const handleGenderChange = (e) => {
     setGender(e.target.value);
   };
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
-
     const body = {
       name: name,
       gender: gender,
@@ -39,42 +40,40 @@ const Home = () => {
       .then((res) => {
         console.log(res.data);
         Swal.fire({
-          title: "Success",
-          text: res.data.detail,
+          title: "Success Add User",
           showCancelButton: false,
           confirmButtonText: "Ok",
         }).then((result) => {
           if (result.isConfirmed) {
-            navigate(0);
+            window.location.reload();
           }
         });
       })
-      .catch((err) => {
-        Swal.fire({
-          title: "Failed",
-          showCancelButton: false,
-        });
-      });
+      .catch(() => {
+        Swal.fire("something error");
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
     <Layout>
       <div className="m-10">
         <div className="flex flex-row justify-between">
-          <h1>User List</h1>
+          <h1 className="font-bold text-2xl py-5">User List</h1>
+
           <div className="pt-5 py-4 space-y-1">
-            <label htmlFor="my-modal-6" className="btn">
+            <label htmlFor="my-modal-6" className="btn bg-[#312e81] text-xl">
               Add User
             </label>
             <input type="checkbox" id="my-modal-6" className="modal-toggle" />
-            <div className="modal modal-bottom sm:modal-middle">
-              <div className="modal-box">
-                <h3 className="font-bold text-lg">Add User</h3>
+            <div className="modal modal-bottom sm:modal-middle ">
+              <div className="modal-box bg-[#e2e8f0]">
+                <h3 className="font-bold text-2xl text-center">Add User</h3>
                 <form onSubmit={handleSubmit} encType="application/json">
                   <Input
                     id="input-name"
-                    title="Name"
-                    placeholder="name"
+                    title="Nama"
+                    placeholder="nama minimal 8 karakter"
                     type="text"
                     onChange={(e) => setName(e.target.value)}
                   />
@@ -87,8 +86,7 @@ const Home = () => {
                     onChange={(e) => setAddres(e.target.value)}
                   />
                   <p className="my-1 font-bold text-lg">Jenis Kelamin</p>
-                  <div className="flex flex-row items-center">
-                    {/* <label> */}
+                  <div className="flex flex-row items-center gap-3">
                     <input
                       type="radio"
                       value="l"
@@ -103,34 +101,6 @@ const Home = () => {
                       onChange={handleGenderChange}
                     />
                     Perempuan
-                    {/* </label> */}
-                    {/* <input
-                      type="radio"
-                      id="radio1"
-                      name="radio-group"
-                      onChange={(e) => setGender(e.target.value)}
-                    />
-                    <label
-                      for="radio1"
-                      className="flex items-center cursor-pointer"
-                    >
-                      p
-                    </label>
-                  </div>
-
-                  <div className="flex items-center">
-                    <input
-                      type="radio"
-                      id="radio2"
-                      name="radio-group"
-                      onChange={(e) => setGender(e.target.value)}
-                    />
-                    <label
-                      for="radio2"
-                      className="flex items-center cursor-pointer"
-                    >
-                      w
-                    </label> */}
                   </div>
                   <p className="my-3 font-bold text-lg">Tanggal Lahir</p>
                   <input
@@ -140,19 +110,27 @@ const Home = () => {
                     name="datemax"
                     onChange={(e) => setBorn(e.target.value)}
                   />
+                  <div className="grid grid-cols-2 w-2/3 md:w-full lg:w-full max-w-md mt-3 gap-3">
+                    <Btn
+                      id="btn-addUser"
+                      className="my-6 bg-[#312e81] text-white "
+                      label="Add"
+                    />
 
-                  <Btn id="btn-addUser" className="my-10 " label="Add" />
+                    <div className="modal-action">
+                      <label
+                        htmlFor="my-modal-6"
+                        className="btn rounded-full w-full"
+                      >
+                        Cancel
+                      </label>
+                    </div>
+                  </div>
                 </form>
-                <div className="modal-action">
-                  <label htmlFor="my-modal-6" className="btn">
-                    cancel
-                  </label>
-                </div>
               </div>
             </div>
           </div>
         </div>
-
         <Card />
       </div>
     </Layout>
