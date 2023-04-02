@@ -115,20 +115,34 @@ const Card = ({}) => {
       <div className="flex justify-start min-h-screen ">
         <div className="overflow-auto lg:overflow-visible w-full ">
           <table className="table  table-auto divide-y bg-black text-gray-900 border-separate space-y-6 text-sm w-full">
-            <thead className="bg-gray-800 text-black">
-              <tr>
-                <th className="p-3 text-left">Name</th>
-                <th className="p-3 text-left hidden md:table-cell">Alamat</th>
-                <th className="p-3 text-left hidden md:table-cell">P/L</th>
-                <th className="p-3 text-left hidden md:table-cell">
-                  Tanggal Lahir
-                </th>
-                <th className="p-3 text-left hidden md:table-cell">
-                  Tanggal Input
-                </th>
-                <th className="p-3 text-left ">Action</th>
-              </tr>
-            </thead>
+            {datas.length !== 0 ? (
+              <>
+                <thead className="bg-gray-800 text-black">
+                  <tr>
+                    <th className="p-3 text-left">Name</th>
+                    <th className="p-3 text-left hidden md:table-cell">
+                      Alamat
+                    </th>
+                    <th className="p-3 text-left hidden md:table-cell">P/L</th>
+                    <th className="p-3 text-left hidden md:table-cell">
+                      Tanggal Lahir
+                    </th>
+                    <th className="p-3 text-left hidden md:table-cell">
+                      Tanggal Input
+                    </th>
+                    <th className="p-3 text-left ">Action</th>
+                  </tr>
+                </thead>
+              </>
+            ) : (
+              <>
+                <div className="flex w-full bg-white justify-center items-center h-72">
+                  <p className="text-4xl font-semibold animate-pulse ">
+                    Your dashboard is empty, please add user
+                  </p>
+                </div>
+              </>
+            )}
             {loading ? (
               <div className="w-full flex items-center justify-center">
                 <DotWave size={100} color={"#f8fafc"} />
